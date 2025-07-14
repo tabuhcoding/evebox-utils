@@ -29,4 +29,4 @@ ENV PYTHONPATH=/app
 EXPOSE 8000
 
 # Run the application (entrypoint for main.py)
-CMD ["python", "main.py"]
+CMD ["python", "app.py"]
