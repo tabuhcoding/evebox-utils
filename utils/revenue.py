@@ -1,7 +1,7 @@
 # utils/revenue_analysis.py
 
 import pandas as pd
-from langchain.chat_models import ChatOpenAI
+from langchain_community.chat_models import ChatOpenAI
 from datetime import datetime
 
 def format_percentage(val: float) -> str:
