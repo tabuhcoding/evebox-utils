@@ -11,7 +11,7 @@ from utils.admin import get_event_analytics as analyze_revenue_event_admin
 router = APIRouter(prefix="/revenue", tags=["revenue"])
 
 class RevenueAnalysisInput(BaseModel):
-    data: dict
+    data: Optional[dict] = None
     event: Optional[str] = ""
     query: Optional[str] = ""
     threadId: Optional[str] = None
