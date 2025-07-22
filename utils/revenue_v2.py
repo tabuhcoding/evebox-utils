@@ -51,7 +51,7 @@ def analyze_revenue_event(
     data: Optional[dict] = None,
     event: Optional[str] = None,
     previous_thread_id: Optional[str] = None
-  ) -> dict:
+  ) -> tuple[str, str, dict]:
   if previous_thread_id:
     # Tiếp tục thread cũ
     thread_id = previous_thread_id
@@ -95,4 +95,6 @@ def analyze_revenue_event(
   messages = openai.beta.threads.messages.list(thread_id=thread_id, order="desc")
   last_message = messages.data[0].content[0].text.value
 
-  return last_message, thread_id
+  usage = run_status.usage if run_status.usage else {}
+
+  return last_message, thread_id, dict(usage)

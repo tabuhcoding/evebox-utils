@@ -24,7 +24,6 @@ def generate_context(data: dict, event: str) -> str:
     conversion_rate = (total_buyers / total_users) if total_users > 0 else 0.0
 
     visits_df = pd.DataFrame(data.get("statistic", []))
-    print(f"Visits DataFrame: {visits_df}")
     if not visits_df.empty:
         visits_df = visits_df.rename(columns={'weekStart': 'Tuần bắt đầu', 'visits': 'Lượt truy cập'})
         visits_markdown = visits_df.to_markdown(index=False)
@@ -54,7 +53,7 @@ def get_event_analytics(
     data: Optional[dict] = None,
     event: Optional[str] = None,
     previous_thread_id: Optional[str] = None
-) -> tuple[str, str]:
+) -> tuple[str, str, dict]:
     if previous_thread_id:
         # Tiếp tục thread cũ
         thread_id = previous_thread_id
@@ -98,4 +97,7 @@ def get_event_analytics(
     messages = openai.beta.threads.messages.list(thread_id=thread_id, order="desc")
     last_message = messages.data[0].content[0].text.value
 
-    return last_message, thread_id
+    # Get usage
+    usage = run_status.usage if run_status.usage else {}
+
+    return last_message, thread_id, dict(usage)

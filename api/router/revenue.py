@@ -28,13 +28,13 @@ async def analyze_revenue(input: RevenueAnalysisInput) -> Any:
 async def get_analytics(input: RevenueAnalysisInput) -> Any:
   try:
     # result = get_event_analytics(input.data, input.event, input.query)
-    content, threadId = analyze_revenue_event_v2(
+    content, threadId, usage = analyze_revenue_event_v2(
         query=input.query,
         data=input.data,
         event=input.event,
         previous_thread_id=input.threadId
     )
-    return { "content": content, "threadId": threadId }
+    return { "content": content, "threadId": threadId, "usage": usage }
   except Exception as e:
     raise HTTPException(status_code=500, detail=str(e))
   
@@ -42,11 +42,11 @@ async def get_analytics(input: RevenueAnalysisInput) -> Any:
 async def get_analytics(input: RevenueAnalysisInput) -> Any:
   try:
     # result = get_event_analytics(input.data, input.event, input.query)
-    content, threadId = analyze_revenue_event_admin(
+    content, threadId, usage = analyze_revenue_event_admin(
         query=input.query,
         data=input.data,
         previous_thread_id=input.threadId
     )
-    return { "content": content, "threadId": threadId }
+    return { "content": content, "threadId": threadId, "usage": usage }
   except Exception as e:
     raise HTTPException(status_code=500, detail=str(e))
